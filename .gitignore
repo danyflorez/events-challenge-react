@@ -1,0 +1,31 @@
+### Git ###
+/**/.gitignore
+
+### Gradle ###
+**/.gradle/
+**/build/
+/**/settings.gradle
+
+### Intellij ###
+**/.idea
+**/*.iml
+**/*.iws
+**/out/
+
+### Eclipse ###
+**/.classpath
+**/.project
+**/.settings
+**/.metadata/
+/RemoteSystemsTempFiles/
+**/bin/
+**/target/
+**/schema/
+
+**/static/
+
+### Node ###
+**/node_modules/
+**/npm-debug.log
+**/public/bundle.js
+**/public/style.css

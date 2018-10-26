@@ -1,0 +1,56 @@
+buildscript {
+	ext {
+		springBootVersion = '2.0.4.RELEASE'
+	}
+	repositories {
+		mavenCentral()
+		maven {url "https://plugins.gradle.org/m2/"}
+	}
+	dependencies {
+		classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
+		classpath "com.moowork.gradle:gradle-node-plugin:1.2.0"
+	}
+}
+
+apply plugin: 'java'
+apply plugin: 'idea'
+apply plugin: 'org.springframework.boot'
+apply plugin: 'io.spring.dependency-management'
+apply plugin: "com.moowork.node"
+
+group = 'com.vivid.partnerships'
+version = '0.0.1-SNAPSHOT'
+sourceCompatibility = 1.8
+
+repositories {
+	mavenCentral()
+}
+
+dependencies {
+	compile('org.springframework.boot:spring-boot-starter-web')
+	compile('org.springframework.boot:spring-boot-starter-jdbc')
+	compile('org.springframework.boot:spring-boot-starter-data-jpa:2.0.6.RELEASE')
+	compile('com.h2database:h2')
+	testCompile('org.springframework.boot:spring-boot-starter-test')
+}
+
+task bootStatic(type: Copy) {
+	from 'src/main/events-web/build'
+	into 'src/main/resources/static'
+}
+
+task react(type: NpmTask) {
+	args = ['run', 'build']
+}
+
+bootStatic.dependsOn(react)
+bootRun.dependsOn(bootStatic)
+
+node {
+	version = '10.7.0'
+	npmVersion = '6.1.0'
+	download = true
+	workDir = file("${project.buildDir}/nodejs")
+	npmWorkDir = file("${project.buildDir}/npm")
+	nodeModulesDir = file('src/main/events-web')
+}
