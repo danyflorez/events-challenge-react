@@ -43,6 +43,7 @@ task react(type: NpmTask) {
 	args = ['run', 'build']
 }
 
+react.dependsOn npmInstall
 bootStatic.dependsOn(react)
 bootRun.dependsOn(bootStatic)
 
